@@ -2,14 +2,14 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Entypo, MaterialIcons } from '@expo/vector-icons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Entypo from '@react-native-vector-icons/entypo'
+import MaterialIcons from '@react-native-vector-icons/material-icons'
+import Ionicons from '@react-native-vector-icons/ionicons'
 import HomeScreen from '../screens/HomeScreen'
 import LikesScreen from '../screens/LikesScreen'
 import ChatScreen from '../screens/ChatScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import { NavigationContainer } from '@react-navigation/native'
-
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -17,7 +17,11 @@ const StackNavigator = () => {
 
     function BottomTabs() {
         return (
-            <Tab.Navigator>
+            <Tab.Navigator 
+            screenOptions={() => ({
+                tabBarStyle: {height: 90},
+                tabBarShowLabel: false,
+            })}>
                 <Tab.Screen name="Home" component={HomeScreen}
                     options={{
                         tabBarStyle: { backgroundColor: '#101010' },
@@ -68,6 +72,18 @@ const StackNavigator = () => {
                 />
             </Tab.Navigator>
         );
+    }
+
+    const AuthStack=() => {
+        return (
+            <Stack.Navigator>
+                <Stack.Screen name="Login" component={LoginScreen}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+            </Stack.Navigator>
+        )
     }
 
     function MainStack() {
