@@ -1,9 +1,14 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import { Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 const NameScreen = () => {
+  const navigation = useNavigation()
+  const handleNext = () => {
+    navigation.navigate('Email')
+  }
   const [firstName, setFirstName] = React.useState('')
   return (
     <SafeAreaView
@@ -56,7 +61,12 @@ const NameScreen = () => {
             fontFamily: 'GeezaPro-Bold',
             fontSize: firstName ? 22 : 22
           }}/>
-          <Text style={{marginTop: 8 }}>Last name is optional</Text>
+          <Text style={{marginTop: 8, fontSize: 15, color: "gray", fontWeight: 500 }}>Last name is optional</Text>
+          <TouchableOpacity 
+          onPress= {handleNext}
+          style={{ marginTop: 30, marginLeft: 'auto'}}>
+            <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845"/>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
