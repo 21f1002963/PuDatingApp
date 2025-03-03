@@ -65,7 +65,7 @@ const EmailScreen = () => {
           style={{ marginTop: 30, marginLeft: 'auto'}}>
             <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845"/>
           </TouchableOpacity>
-        </View>
+      </View>
     </SafeAreaView>
   )
 }
