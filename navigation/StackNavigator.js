@@ -142,16 +142,16 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                <Stack.Screen name="Type" component={TypeScreen}
+                {/* <Stack.Screen name="Type" component={TypeScreen}
                     options={{
                         headerShown: false
                     }}
-                />
-                <Stack.Screen name="Dating" component={DatingType}
+                /> */}
+                {/* <Stack.Screen name="Dating" component={DatingType}
                     options={{
                         headerShown: false
                     }}
-                />
+                /> */}
                 <Stack.Screen name="LookingFor" component={LookingFor}
                     options={{
                         headerShown: false

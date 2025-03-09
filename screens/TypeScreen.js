@@ -9,8 +9,9 @@ import { Pressable, TouchableOpacity } from 'react-native';
 
 const TypeScreen = () => {
   const [type, setType] = React.useState('');
+  const navigation = useNavigation();
   const handleNext = () => {
-    console.log('Type:', type)
+    navigation.navigate('Dating');
   }
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>
@@ -63,14 +64,19 @@ const TypeScreen = () => {
               <FontAwesome name="circle" size={26} color={type =="Bisexual" ? "#581845" : "#F0F0F0"}></FontAwesome>
               </Pressable>
           </View>
+
+          <View style={{marginTop: 30, flexDirection: 'row', alignItems: 'center', gap: 8}}>
+            <MaterialDesignIcons name="checkbox-marked" size={25} color='#900C3F'></MaterialDesignIcons>
+            <Text style={{fontSize: 15}}>Visible on my profile</Text>
+          </View>
         </View>
 
 
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={handleNext}
             style={{ marginTop: 30, marginLeft: 'auto' }}>
             <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845" />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
     </SafeAreaView>
   )

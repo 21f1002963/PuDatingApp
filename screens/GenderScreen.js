@@ -7,12 +7,11 @@ import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import FontAwesome from '@react-native-vector-icons/fontawesome'
 
-
 const GenderScreen = () => {
   const [gender, setGender] = React.useState('')
   const navigation = useNavigation()
   const handleNext = () => {
-    navigation.navigate('Type')
+    navigation.navigate('LookingFor')
   }
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>
@@ -60,13 +59,18 @@ const GenderScreen = () => {
           </View>
         </View>
 
+        <View style={{marginTop: 30, flexDirection: 'row', alignItems: 'center', gap: 8}}>
+          <MaterialDesignIcons name="checkbox-marked" size={25} color='#900C3F'></MaterialDesignIcons>
+          <Text style={{fontSize: 15}}>Visible on my profile
+          </Text>
+        </View>
 
           <TouchableOpacity
             onPress={handleNext}
             style={{ marginTop: 30, marginLeft: 'auto' }}>
             <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845" />
           </TouchableOpacity>
-        </View>
+      </View>
     </SafeAreaView>
   )
 }
