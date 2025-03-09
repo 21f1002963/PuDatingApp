@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Entypo from '@react-native-vector-icons/entypo'
@@ -29,7 +30,6 @@ import PromptsScreen from '../screens/PromptsScreen'
 import ShowPromptsScreen from '../screens/ShowPromptsScreen'
 import WritePrompt from '../screens/WritePrompt'
 import PreFinalScreen from '../screens/PreFinalScreen'
-import { NavigationContainer } from '@react-navigation/native'
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -78,7 +78,7 @@ const StackNavigator = () => {
                             )
                     }}
                 />
-                <Tab.Screen name="Profiel" component={ProfileScreen}
+                <Tab.Screen name="Profile" component={ProfileScreen}
                     options={{
                         tabBarStyle: { backgroundColor: '#101010' },
                         headerShown: false,
@@ -117,12 +117,12 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                <Stack.Screen name="OTP" component={OtpScreen}
+                <Stack.Screen name="Password" component={PasswordScreen}
                     options={{
-                        headerShown: false
+                    headerShown: false
                     }}
                 />
-                <Stack.Screen name="Password" component={PasswordScreen}
+                <Stack.Screen name="OTP" component={OtpScreen}
                     options={{
                         headerShown: false
                     }}
@@ -132,11 +132,11 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                <Stack.Screen name="Location" component={LocationScreen}
+                {/* <Stack.Screen name="Location" component={LocationScreen}
                     options={{
                         headerShown: false
                     }}
-                />
+                /> */}
                 <Stack.Screen name="Gender" component={GenderScreen}
                     options={{
                         headerShown: false

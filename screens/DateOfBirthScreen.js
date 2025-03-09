@@ -35,7 +35,7 @@ const DateOfBirthScreen = () => {
 
   const navigation = useNavigation()
   const handleNext = () => {
-    navigation.navigate('Location')
+    navigation.navigate('Gender')
   }
 
   return (
