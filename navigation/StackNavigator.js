@@ -172,16 +172,16 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                <Stack.Screen name="Photos" component={PhotoScreen}
+                {/* <Stack.Screen name="Photos" component={PhotoScreen}
                     options={{
                         headerShown: false
                     }}
-                />
-                <Stack.Screen name="Prompts" component={PromptsScreen}
+                /> */}
+                {/* <Stack.Screen name="Prompts" component={PromptsScreen}
                     options={{
                         headerShown: false
                     }}
-                />
+                /> */}
                 <Stack.Screen name="ShowPrompts" component={ShowPromptsScreen}
                     options={{
                         headerShown: false
