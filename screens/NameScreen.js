@@ -1,12 +1,23 @@
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const NameScreen = () => {
   const navigation = useNavigation()
+  useEffect(() => {
+    getRegistrationProgress('Name').then(data => {
+      if(data) {
+        setFirstName(data.firstName || '')
+      }
+    })
+  }, [])
   const handleNext = () => {
+    if(firstName.trim() !== '') {
+      saveRegistrationProgress('Name', { firstName })
+    }
     navigation.navigate('Email')
   }
   const [firstName, setFirstName] = React.useState('')
