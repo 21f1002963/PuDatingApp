@@ -5,8 +5,9 @@ import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { Pressable } from 'react-native'
 import { useRoute } from '@react-navigation/native'
+import WritePrompt from '../screens/WritePrompt';
 
-const ShowPromptsScreen = () => {
+const ShowPromptsScreen = ({ route: newroute }) => {
   const navigation = useNavigation()
   const route = useRoute()
   const [prompts, setPrompts] = useState([])
@@ -262,18 +263,19 @@ const ShowPromptsScreen = () => {
 
         <View style={{marginHorizontal: 12, marginTop: 6}}>
           {promptss?.map((item, index) => (
-            <View>
+            <View key={index}>
               {option == item?.name && (
                 <View>
                   {item?.questions?.map((question, index) => (
                     <>
                     <Pressable 
+                    key={index}
                     onPress={() => {
                       navigation.navigate('WritePrompt', {
                         question: question?.question,
-                        prompts: route?.params?.prompts,
-                        setPrompts: route?.params?.setPrompts,
-                        index: route?.params?.index,
+                        prompts: newroute?.params?.prompts,
+                        setPrompts: newroute?.params?.setPrompts,
+                        index: newroute?.params?.index,
                       })
                     }}
                     style={{marginVertical: 20}}>

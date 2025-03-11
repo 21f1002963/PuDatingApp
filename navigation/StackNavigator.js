@@ -28,8 +28,8 @@ import JobTitleScreen from '../screens/JobTitleScreen'
 import PhotoScreen from '../screens/PhotoScreen'
 import PromptsScreen from '../screens/PromptsScreen'
 import ShowPromptsScreen from '../screens/ShowPromptsScreen'
-import WritePrompt from '../screens/WritePrompt'
 import PreFinalScreen from '../screens/PreFinalScreen'
+import WritePrompt from '../screens/WritePrompt'
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -177,11 +177,11 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 /> */}
-                {/* <Stack.Screen name="Prompts" component={PromptsScreen}
+                <Stack.Screen name="Prompts" component={PromptsScreen}
                     options={{
                         headerShown: false
                     }}
-                /> */}
+                />
                 <Stack.Screen name="ShowPrompts" component={ShowPromptsScreen}
                     options={{
                         headerShown: false

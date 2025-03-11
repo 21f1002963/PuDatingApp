@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import { Image } from 'react-native'
@@ -18,8 +18,13 @@ const PromptsScreen = () => {
   const route = useRoute()
   const navigation = useNavigation()
   const handleNext = () => {
-    navigation.navigate('Profile')
+    navigation.navigate('PreFinal')
   }
+  useEffect(() => {
+    if (route?.params?.prompts) {
+      setPrompts(route?.params?.prompts)
+    }
+  }, [route.params])
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>
       <View style={{ marginTop: 30, marginHorizontal: 20 }}>
