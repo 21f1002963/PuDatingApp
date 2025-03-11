@@ -260,15 +260,29 @@ const ShowPromptsScreen = () => {
           </ScrollView>
         </View>
 
-        <View>
+        <View style={{marginHorizontal: 12, marginTop: 6}}>
           {promptss?.map((item, index) => (
             <View>
               {option == item?.name && (
                 <View>
                   {item?.questions?.map((question, index) => (
-                    <View>
+                    <>
+                    <Pressable 
+                    onPress={() => {
+                      navigation.navigate('WritePrompt', {
+                        question: question?.question,
+                        prompts: route?.params?.prompts,
+                        setPrompts: route?.params?.setPrompts,
+                        index: route?.params?.index,
+                      })
+                    }}
+                    style={{marginVertical: 20}}>
+                        <Text style={{fontSize: 15, fontWeight: '500', color: '#202020'}}>
                         {question?.question}
-                    </View>
+                        </Text>
+                    </Pressable>
+                    <View style={{borderColor: '#E0E0E0', borderWidth: 0.5, }}></View>
+                    </>
                   ))}
                 </View>
             )}
