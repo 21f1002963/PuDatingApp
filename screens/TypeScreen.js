@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import { Image } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
@@ -10,7 +10,17 @@ import { Pressable, TouchableOpacity } from 'react-native';
 const TypeScreen = () => {
   const [type, setType] = React.useState('');
   const navigation = useNavigation();
+  useEffect(() => {
+    getRegistrationProgress().then((progress) => {
+      if(progress.Type) {
+        setType(progress.Type || '');
+      }
+    })
+  }, [])
   const handleNext = () => {
+    if(type.trim() !== '') {
+      saveRegistrationProgress('Type', type)
+    }
     navigation.navigate('Dating');
   }
   return (

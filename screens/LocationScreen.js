@@ -4,12 +4,12 @@ import React, { useEffect } from 'react'
 import { GOOGLE_MAPS_API_KEY } from '@env'
 import { Alert } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { Image } from 'react-native'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native'
+import { saveRegistrationProgress } from '../utils/registrationProgress'
 
 const LocationScreen = () => {
   const navigation = useNavigation();
@@ -93,6 +93,7 @@ const LocationScreen = () => {
   };
 
   const handleNext = () => {
+    saveRegistrationProgress('location', location)
     navigation.navigate('Gender')
   }
 

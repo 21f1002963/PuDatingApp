@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { Ionicons } from '@react-native-vector-icons/ionicons'
@@ -7,7 +7,7 @@ import { MaterialDesignIcons } from '@react-native-vector-icons/material-design-
 import { FontAwesome } from '@react-native-vector-icons/fontawesome'
 import { Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const DatingType = () => {
   const navigation = useNavigation()
@@ -20,7 +20,18 @@ const DatingType = () => {
     }
   }
 
+  useEffect(() => {
+    getRegistrationProgress('Dating').then((data) => {
+      if (data) {
+        setDatingPreference(data.datingPreference || [])
+      }
+    })
+  }, [])
+
   const handleNext = () => {
+    if (datingPreference.length > 0) {
+      saveRegistrationProgress('Dating', { datingPreference })
+    }
     navigation.navigate('LookingFor')
   }
 

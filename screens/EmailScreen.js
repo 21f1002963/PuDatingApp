@@ -1,20 +1,34 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Fontisto from "@react-native-vector-icons/fontisto"
 import { Image } from 'react-native'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Ionicons from '@react-native-vector-icons/ionicons'
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const EmailScreen = () => {
   const navigaiton = useNavigation()
   const [Email, setEmail] = React.useState('');
+
+  useEffect(() => {
+    getRegistrationProgress('Email').then(data => {
+      if(data){
+        setEmail(data)
+      }
+    })
+  }, [])
+
   const handleNext = () => {
+    if(Email.trim() !== ''){
+      saveRegistrationProgress('Email', Email)
+    }
     navigaiton.navigate('Password', {
       email: Email
     })
   }
+
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>
       <View style={{ marginTop: 80, marginHorizontal: 20 }}>

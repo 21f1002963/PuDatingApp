@@ -1,16 +1,28 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import FontAwesome from '@react-native-vector-icons/fontawesome'
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationProgress'
+
 
 const GenderScreen = () => {
   const [gender, setGender] = React.useState('')
   const navigation = useNavigation()
+  useEffect(() => {
+    getRegistrationProgress('Gender').then(progressData => {
+      if(progressData) {
+        setGender(progressData || '')
+      }
+  }, [])
+  })
   const handleNext = () => {
+    if(gender.trim() !== '') {
+      saveRegistrationProgress('Gender', gender)
+    }
     navigation.navigate('LookingFor')
   }
   return (

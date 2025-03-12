@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, TextInput } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
@@ -13,7 +13,17 @@ import { useState } from 'react'
 const HomeTownScreen = () => {
   const [hometown, setHometown] = useState('')
   const navigation = useNavigation()
+  useEffect(() => {
+    setRegistrationProgress('Hometown').then((data) => {
+      if(data){
+        setHometown(data.hometown)
+      }
+    })
+  }, [])
   const handleNext = () => {
+    if(hometown.trim() !== ''){
+      saveRegistrationProgress('Hometown', {hometown})
+    }
     navigation.navigate('WorkPlace')
   }
   return (

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
@@ -7,12 +7,21 @@ import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { TextInput } from 'react-native'
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 
 const WorkPlace = () => {
   const [WorkPlace, setWorkPlace] = useState('')
   const navigation = useNavigation()
+  useEffect(() => {
+    getRegistrationProgress('Hometown').then((Hometown) => {
+      setWorkPlace(Hometown)
+    })
+  }, [])
   const handleNext = () => {
+    if(WorkPlace.trim() !== ''){
+      saveRegistrationProgress('WorkPlace', WorkPlace)
+    }
     navigation.navigate('Jobtitle')
   }
   return (

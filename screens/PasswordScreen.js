@@ -6,12 +6,16 @@ import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons"
+import { saveRegistrationProgress } from '../utils/registrationProgress';
 
 const PasswordScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const email = route?.params?.email;
   const handleNext = () => {
+    if(password.trim() !== '') {
+      saveRegistrationProgress('password', password)
+    }
     navigation.navigate('OTP', {email})
   }
   const [password, setPassword] = React.useState('');

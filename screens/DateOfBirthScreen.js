@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TextInput, TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { saveRegistrationProgress } from '../utils/registrationProgress'
+import { getRegistraitonProgress } from '../utils/registrationProgress'
 
 
 const DateOfBirthScreen = () => {
@@ -34,7 +36,23 @@ const DateOfBirthScreen = () => {
   }
 
   const navigation = useNavigation()
+
+  useEffect(() => {
+    getRegistraitonProgress('dateOfBirth').then((dateOfBirth) => {
+      if (dateOfBirth) {
+        const [day, month, year] = dateOfBirth.split('/')
+        setDay(day)
+        setMonth(month)
+        setYear(year)
+      }
+    })
+  }, [])
+
   const handleNext = () => {
+    if(day.trim() !== '' && month.trim() !== '' && year.trim() !== '') {
+      const dateOfBirth = `${day}/${month}/${year}`
+      saveRegistrationProgress('dateOfBirth', dateOfBirth)
+    }
     navigation.navigate('Gender')
   }
 

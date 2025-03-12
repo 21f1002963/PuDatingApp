@@ -11,8 +11,16 @@ import { TextInput } from 'react-native'
 
 const JobTitleScreen = () => {
   const [Jobtitle, setJobtitle] = useState('')
-  const navigation = useNavigation()  
+  const navigation = useNavigation() 
+  useEffect(() => {
+      getRegistrationProgress('Hometown').then((Jobtitle) => {
+        setWorkPlace(Jobtitle)
+      })
+    }, []) 
   const handleNext = () => {
+    if(Jobtitle.trim() !== ''){
+      saveRegistrationProgress('Jobtitle', WorkPlace)
+    }
     // navigation.navigate('Prompts')
     navigation.navigate('ShowPrompts')
   }
