@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialIcons from '@react-native-vector-icons/material-icons'
@@ -14,7 +14,15 @@ import { Button } from 'react-native'
 const PhotoScreen = () => {
   const [imgUrls, setImgUrls] = useState(['', '', '', '', '',''])
   const [imgUrl, setImgUrl] = useState('')
+  useEffect(() => {
+    getRegistrationProgress().then(progress => {
+      if (progress?.imgUrls) {
+        setImgUrls(progress.imgUrls)
+      }
+    })
+  }, [])
   const handleNext = () => {
+    saveRegistrationProgress({imgUrls})
     navigation.navigate('Prompts')
   }
   const navigation = useNavigation()

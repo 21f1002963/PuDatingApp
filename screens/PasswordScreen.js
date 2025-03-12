@@ -12,11 +12,27 @@ const PasswordScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const email = route?.params?.email;
+
+  const handleSendOtp = async () =>{
+    if(!email) return;
+
+    try{
+      const response = await axios.post(`${BASE_URL}/sendOtp`, {
+        email: email,
+        password: password
+      });
+      console.log("OTP sent successfully", response.data);
+      navigation.navigate('Otp', { email: email });
+    }catch(error){
+      console.log("Error sending the otp", error);
+    }
+  }
+
   const handleNext = () => {
     if(password.trim() !== '') {
       saveRegistrationProgress('password', password)
     }
-    navigation.navigate('OTP', {email})
+    handleSendOtp();
   }
   const [password, setPassword] = React.useState('');
   return (

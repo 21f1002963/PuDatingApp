@@ -70,7 +70,9 @@ function App() {
   const safePadding = '5%';
 
   return (
-    <StackNavigator />
+    <AuthProvider>
+      <StackNavigator />
+    </AuthProvider>
   );
 }
 

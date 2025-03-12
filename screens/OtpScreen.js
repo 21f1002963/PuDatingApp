@@ -11,8 +11,24 @@ const OtpScreen = () => {
   const navigation = useNavigation();
   const email = route?.params?.email;
 
-  const handleConfirmSignUp = () => {
-    navigation.navigate('Birth')
+  const handleConfirmSignUp = async () => {
+    const otp = otp.join('');
+    console.log("OTP entered is", otp);
+
+    if(!email || !otp){
+      return;
+    } 
+    try{
+      const response = await axios.post(`${BASE_URL}/confirmSignUp`, {email, otp});
+      if(response.status === 200){
+        console.log("Confirm sign up response", response.data);
+        Alert.alert("OTP confirmed successfully");
+        navigation.navigate('Birth')
+      }
+    } catch(error){
+      console.log("Error confirming the otp", error);
+
+    }
   }
 
   useEffect(()=>{
@@ -40,6 +56,16 @@ const OtpScreen = () => {
     setOtp(newOtp)
   }
 
+  const handleResendOtp = async () => {
+    setOtp(['', '', '', '', '', ''])
+
+    try{
+      const response = await axios.post(`${BASE_URL}/resendOtp`, {email});
+      console.log("OTP resent successfully", response.data);
+    }catch(erro){
+      console.log("Error resending the OTP", error);
+    }
+  }
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white', alignItems: 'center' }}>
       <View style = {{
@@ -93,7 +119,10 @@ const OtpScreen = () => {
           </TextInput>
         ))}
       </View>
-
+      
+      <View style={{marginTop: 30}}>
+        <Button onPress={handleResendOtp} style={{color: 'blue'}}>Resend OTP</Button>
+      </View>
     </SafeAreaView>
   )
 }

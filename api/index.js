@@ -75,3 +75,67 @@ app.post('/register', async (req, res) => {
     }
 })
 
+app.post('/sendOtp', async(req, res) => {
+    const {email, password} = req.body;
+    
+    if(! email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return res.status(400).json({error: 'Invalid email'});
+    }
+
+    const signUpParams = {
+        ClientId: '90m1tehn4bt5muim50pjen1cv',
+        Username: email,
+        Password: password,
+        UserAttributes: [
+            {
+                Name: 'email',
+                Value: email
+            }
+        ]
+    }
+
+    try{
+        const command = new SignUpCommand(signUpParams);
+        await cognitoClient.send(command);
+        res.status(200).json({message: 'OTP sent successfully'});
+    } catch(error){
+        res.status(400).json({error: 'Failed to send OTP. Please try again'});
+    }
+
+})
+
+app.post('/resendOtp', async(req, res) => {
+    const {email} = req.body;
+
+    const resendOtpParams = {
+        ClientId: '90m1tehn4bt5muim50pjen1cv',
+        Username: email
+    }
+
+    try{
+        const command = new ResendConfirmationCodeCommand(resendOtpParams);
+        await cognitoClient.send(command)
+        res.status(200).json({message: "OTP resent successfully"})
+    } catch(error){
+        res.status(400).json({error: 'Failed to resend OTP. Please try again'});
+    }
+})
+
+app.post('/confirmSignUp', async(req, res) => {
+    const {email, otp} = req.body;
+
+    const confirmParams = {
+        ClientId: '90m1tehn4bt5muim50pjen1cv',
+        Username: email,
+        ConfirmationCode: otp
+    }
+
+    try{
+        const command = new ConfirmSignUpCommand(confirmParams);
+        await cognitoClient.send(command);
+        res.status(200).json({message: 'Email verified successfully'});
+    }catch(error){
+        res.status(400).json({error: 'Failed to confirm OTP. Please try again'});
+    }
+})
+

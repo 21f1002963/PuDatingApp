@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -34,7 +34,7 @@ import WritePrompt from '../screens/WritePrompt'
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
     const Tab = createBottomTabNavigator();
-
+    const {token} = useContext(AuthContext)
     function BottomTabs() {
         return (
             <Tab.Navigator 
@@ -215,7 +215,7 @@ const StackNavigator = () => {
 
     return (
         <NavigationContainer>
-            <AuthStack />
+            {token == null || token == '' ? <AuthStack /> : <MainStack />}
         </NavigationContainer>
     )
 }

@@ -18,6 +18,7 @@ const PromptsScreen = () => {
   const route = useRoute()
   const navigation = useNavigation()
   const handleNext = () => {
+    saveRegistrationProgress('Prompts', {prompts})
     navigation.navigate('PreFinal')
   }
   useEffect(() => {
