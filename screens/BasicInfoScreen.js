@@ -38,7 +38,7 @@ const BasicInfo = () => {
         />
       </View>
       <Pressable 
-      style={{ backgroundColor: '#900C3F', justifyContent: 'center', alignItems: 'center', marginTop: 'auto', padding: 15}}
+      style={{ backgroundColor: '#900C3F', justifyContent: 'center', alignItems: 'center', marginTop: 'auto', marginBottom: 25, padding: 15}}
       onPress={() => navigation.navigate('Name')}>
         <Text style={{
           color: 'white',

@@ -6,7 +6,7 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import FontAwesome from '@react-native-vector-icons/fontawesome'
-import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationProgress'
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 
 const GenderScreen = () => {

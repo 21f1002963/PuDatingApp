@@ -5,8 +5,8 @@ import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { saveRegistrationProgress } from '../utils/registrationProgress'
-import { getRegistraitonProgress } from '../utils/registrationProgress'
+import { saveRegistrationProgress } from '../utils/registrationUtils'
+import { getRegistraitonProgress } from '../utils/registrationUtils'
 
 
 const DateOfBirthScreen = () => {

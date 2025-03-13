@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React, { useContext } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -30,6 +29,7 @@ import PromptsScreen from '../screens/PromptsScreen'
 import ShowPromptsScreen from '../screens/ShowPromptsScreen'
 import PreFinalScreen from '../screens/PreFinalScreen'
 import WritePrompt from '../screens/WritePrompt'
+import { AuthContext } from '../AuthContext'
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
@@ -132,26 +132,26 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                {/* <Stack.Screen name="Location" component={LocationScreen}
+                <Stack.Screen name="Location" component={LocationScreen}
                     options={{
                         headerShown: false
                     }}
-                /> */}
+                />
                 <Stack.Screen name="Gender" component={GenderScreen}
                     options={{
                         headerShown: false
                     }}
                 />
-                {/* <Stack.Screen name="Type" component={TypeScreen}
+                <Stack.Screen name="Type" component={TypeScreen}
                     options={{
                         headerShown: false
                     }}
-                /> */}
-                {/* <Stack.Screen name="Dating" component={DatingType}
+                />
+                <Stack.Screen name="Dating" component={DatingType}
                     options={{
                         headerShown: false
                     }}
-                /> */}
+                />
                 <Stack.Screen name="LookingFor" component={LookingFor}
                     options={{
                         headerShown: false
@@ -172,11 +172,11 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                {/* <Stack.Screen name="Photos" component={PhotoScreen}
+                <Stack.Screen name="Photos" component={PhotoScreen}
                     options={{
                         headerShown: false
                     }}
-                /> */}
+                />
                 <Stack.Screen name="Prompts" component={PromptsScreen}
                     options={{
                         headerShown: false

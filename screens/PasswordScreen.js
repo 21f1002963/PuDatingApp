@@ -6,23 +6,25 @@ import { Image } from 'react-native';
 import { TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons"
-import { saveRegistrationProgress } from '../utils/registrationProgress';
+import { saveRegistrationProgress } from '../utils/registrationUtils';
+import axios from 'axios';
+import { BASE_URL } from '../urls/url';
 
 const PasswordScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const email = route?.params?.email;
+  const [password, setPassword] = React.useState('');
 
   const handleSendOtp = async () =>{
-    if(!email) return;
-
+    if(!email) console.log("Email is required");
     try{
       const response = await axios.post(`${BASE_URL}/sendOtp`, {
         email: email,
         password: password
       });
       console.log("OTP sent successfully", response.data);
-      navigation.navigate('Otp', { email: email });
+      navigation.navigate('OTP', { email: email });
     }catch(error){
       console.log("Error sending the otp", error);
     }
@@ -34,7 +36,6 @@ const PasswordScreen = () => {
     }
     handleSendOtp();
   }
-  const [password, setPassword] = React.useState('');
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>
       <View style={{ marginTop: 80, marginHorizontal: 20 }}>
@@ -58,11 +59,11 @@ const PasswordScreen = () => {
           onChangeText={ text => setPassword(text)}
           autoFocus={true}
           secureTextEntry={true}
-          placeholder='Enter your email'
+          placeholder='Enter your password'
           placeholderTextColor={"#BEBEBE"}
           style={{
             width:340,
-            // marginVertical: 10,
+            marginVertical: 20,
             marginTop: 25,
             borderBottomColor: 'black',
             borderBottomWidth: 1,

@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native'
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const NameScreen = () => {
+  const [firstName, setFirstName] = React.useState('')
   const navigation = useNavigation()
   useEffect(() => {
     getRegistrationProgress('Name').then(data => {
@@ -20,7 +21,6 @@ const NameScreen = () => {
     }
     navigation.navigate('Email')
   }
-  const [firstName, setFirstName] = React.useState('')
   return (
     <SafeAreaView
       style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>

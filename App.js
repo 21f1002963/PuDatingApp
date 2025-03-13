@@ -24,6 +24,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Entypo from '@react-native-vector-icons/entypo';
 import StackNavigator from './navigation/StackNavigator';
+import { AuthProvider } from './AuthContext';
 
 function Section({children, title}){
   const isDarkMode = useColorScheme() === 'dark';

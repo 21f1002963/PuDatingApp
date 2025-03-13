@@ -7,9 +7,8 @@ import bcrypt from 'bcrypt';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { PutItemCommand } from '@aws-sdk/client-dynamodb';
 import { CognitoIdentityProviderClient } from '@aws-sdk/client-cognito-identity-provider';
-import { docClient, PutCommand } from './dynamodb.js';
+import { docClient, PutCommand } from './db.js';
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 
 const app = express();
 app.use(cors());
@@ -100,6 +99,7 @@ app.post('/sendOtp', async(req, res) => {
         res.status(200).json({message: 'OTP sent successfully'});
     } catch(error){
         res.status(400).json({error: 'Failed to send OTP. Please try again'});
+        console.log(error)
     }
 
 })

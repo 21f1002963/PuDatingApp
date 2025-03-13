@@ -9,7 +9,7 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps'
 import { useNavigation } from '@react-navigation/native'
-import { saveRegistrationProgress } from '../utils/registrationProgress'
+import { saveRegistrationProgress } from '../utils/registrationUtils'
 
 const LocationScreen = () => {
   const navigation = useNavigation();
