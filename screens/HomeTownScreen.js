@@ -8,15 +8,16 @@ import { useNavigation } from '@react-navigation/native'
 import FontAwesome from '@react-native-vector-icons/fontawesome'
 import { Pressable } from 'react-native'
 import { useState } from 'react'
+import { saveRegistrationProgress, getRegistrationProgress } from '../utils/registrationUtils'
 
 
 const HomeTownScreen = () => {
   const [hometown, setHometown] = useState('')
   const navigation = useNavigation()
   useEffect(() => {
-    setRegistrationProgress('Hometown').then((data) => {
+    getRegistrationProgress('Hometown').then((data) => {
       if(data){
-        setHometown(data.hometown)
+        setHometown(data.hometown || '')
       }
     })
   }, [])

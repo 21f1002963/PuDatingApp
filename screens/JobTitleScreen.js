@@ -7,7 +7,8 @@ import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { TextInput } from 'react-native'
-
+import { saveRegistrationProgress, getRegistrationProgress } from '../utils/registrationUtils'
+import { useEffect } from 'react'
 
 const JobTitleScreen = () => {
   const [Jobtitle, setJobtitle] = useState('')
@@ -19,10 +20,9 @@ const JobTitleScreen = () => {
     }, []) 
   const handleNext = () => {
     if(Jobtitle.trim() !== ''){
-      saveRegistrationProgress('Jobtitle', WorkPlace)
+      saveRegistrationProgress('Jobtitle', Jobtitle)
     }
-    // navigation.navigate('Prompts')
-    navigation.navigate('ShowPrompts')
+    navigation.navigate('Photos')
   }
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>

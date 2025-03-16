@@ -1,7 +1,15 @@
-import { SafeAreaView, StyleSheet, Text, View,  Platform } from 'react-native'
-import React from 'react'
-import { Pressable } from 'react-native'
-import { Ionicons } from '@react-native-vector-icons/ionicons'
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Platform,
+  Pressable,
+  TextInput,
+} from 'react-native';
+import React, {useState} from 'react';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const WritePrompt = () => {
   const route = useRoute()

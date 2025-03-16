@@ -7,15 +7,16 @@ import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { TextInput } from 'react-native'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
-
+import { saveRegistrationProgress, getRegistrationProgress } from '../utils/registrationUtils'
 
 const WorkPlace = () => {
   const [WorkPlace, setWorkPlace] = useState('')
   const navigation = useNavigation()
   useEffect(() => {
-    getRegistrationProgress('Hometown').then((Hometown) => {
-      setWorkPlace(Hometown)
+    getRegistrationProgress('WorkPlace').then((progress) => {
+      if(progress){
+        setWorkPlace(progress.WorkPlace || '')
+      }
     })
   }, [])
   const handleNext = () => {
@@ -48,7 +49,7 @@ const WorkPlace = () => {
 
         <TextInput autoFocus={true} 
         value={WorkPlace}
-        onChangeText={text => setHometown(text)}
+        onChangeText={text => setWorkPlace(text)}
         placeholder='WorkPlace'
         style={{
           width:340,

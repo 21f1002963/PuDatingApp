@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable, ActivityIndicator } from 'react-native'
+import React, {useState, useEffect, useContext} from 'react';
 import LottieView from 'lottie-react-native'
 import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../AuthContext'
-import { set } from 'core-js/core/dict'
-
+import axios from 'axios'
+import { BASE_URL } from '../urls/url'
+import { getRegistrationProgress } from '../utils/registrationUtils';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PreFinalScreen = () => {
-  const [userData, setUserData] = React.useState(null)
+  const [userData, setUserData] = React.useState()
   const [loading, setLoading] = React.useState(false)
   const { token, setToken } = React.useContext(AuthContext)
   const navigation = useNavigation()
   useEffect(() => {
-    getALlUserData()
+    getAllUserData()
   }, [])
+
+  console.log('User', userData)
 
   const clearAllScreenData = async () => {
     try {
@@ -50,6 +54,7 @@ const PreFinalScreen = () => {
       setLoading(true)
       const response = await axios.post(`${BASE_URL}/register`, userData).then((response) => {
         const token = response.data.token
+        AsyncStorage.setItem('token', token);
         setToken(token)
       })
       clearAllScreenData()
@@ -61,7 +66,7 @@ const PreFinalScreen = () => {
   }
   }
 
-  const getALlUserData = async () => {
+  const getAllUserData = async () => {
     try {
       const screens = [
         'Name',

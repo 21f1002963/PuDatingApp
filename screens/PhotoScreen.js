@@ -8,21 +8,22 @@ import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { TextInput } from 'react-native'
 import { Pressable } from 'react-native'
-import { EvilIcons } from '@react-native-vector-icons/evil-icons'
+import  EvilIcons  from '@react-native-vector-icons/evil-icons'
 import { Button } from 'react-native'
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const PhotoScreen = () => {
   const [imgUrls, setImgUrls] = useState(['', '', '', '', '',''])
   const [imgUrl, setImgUrl] = useState('')
   useEffect(() => {
-    getRegistrationProgress().then(progress => {
-      if (progress?.imgUrls) {
+    getRegistrationProgress('Photos').then(progress => {
+      if (progress) {
         setImgUrls(progress.imgUrls)
       }
     })
   }, [])
   const handleNext = () => {
-    saveRegistrationProgress({imgUrls})
+    saveRegistrationProgress('Photos',{imgUrls})
     navigation.navigate('Prompts')
   }
   const navigation = useNavigation()
@@ -132,8 +133,9 @@ const PhotoScreen = () => {
               <TextInput 
               value={imgUrl}
               onChangeText={text=> setImgUrl(text)}
-              style={{marginVertical: 10, color: 'gray', width: 300}}
+              style={{marginVertical: 10, color: 'black', width: 300}}
               placeholder="Enter your image URL"
+              placeholderTextColor="black"
               ></TextInput>
             </View>
 

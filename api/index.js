@@ -53,7 +53,7 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(userData.password, 10);
         const userId = crypto.randomUUID();
         const newUser = {
-            id: userId,
+            userId: userId,
             email: userData.email,
             password: hashedPassword,
             firstName: userData.firstName,

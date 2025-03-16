@@ -6,8 +6,9 @@ import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { Pressable } from 'react-native'
-import { AntDesign } from '@react-native-vector-icons/ant-design'
+import  AntDesign  from '@react-native-vector-icons/ant-design'
 import { useRoute } from '@react-navigation/native'
+import { saveRegistrationProgress, getRegistrationProgress } from '../utils/registrationUtils'
 
 const PromptsScreen = () => {
   const [prompts, setPrompts] = useState([
@@ -22,6 +23,11 @@ const PromptsScreen = () => {
     navigation.navigate('PreFinal')
   }
   useEffect(() => {
+    getRegistrationProgress('Prompts').then(data => {
+      if(data){
+        setPrompts(data.prompts)
+      }
+    })
     if (route?.params?.prompts) {
       setPrompts(route?.params?.prompts)
     }

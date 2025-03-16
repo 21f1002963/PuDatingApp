@@ -6,10 +6,10 @@ import { Image } from 'react-native'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps'
-import { Ionicons } from '@react-native-vector-icons/ionicons'
+import Ionicons  from '@react-native-vector-icons/ionicons'
 import { useNavigation } from '@react-navigation/native'
 import { saveRegistrationProgress } from '../utils/registrationUtils'
-import { PermissionsAndroid, Alert} from 'react-native';
+import { PermissionsAndroid, Alert } from 'react-native';
 
 const LocationScreen = () => {
   const navigation = useNavigation();
@@ -157,12 +157,11 @@ const LocationScreen = () => {
           onPress={handleNext}
           activeOpacity={0.8}
           style={{marginTop: 30, marginLeft: 'auto'}}>
-          {/* <Ionicons
+          <Ionicons
             name="chevron-forward-circle-outline"
             size={45}
             color="#581845"
-          /> */}
-          <Text style={{fontSize: 20}}>Next</Text>
+          />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
