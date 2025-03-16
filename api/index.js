@@ -1,14 +1,34 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import dayjs from 'dayjs';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { PutItemCommand } from '@aws-sdk/client-dynamodb';
-import { CognitoIdentityProviderClient } from '@aws-sdk/client-cognito-identity-provider';
-import { docClient, PutCommand } from './db.js';
+import {
+  DynamoDBClient,
+  PutItemCommand,
+  QueryCommand,
+  ScanCommand,
+  UpdateItemCommand,
+} from '@aws-sdk/client-dynamodb';
 import crypto from 'crypto';
+import {
+  CognitoIdentityProviderClient,
+  ConfirmSignUpCommand,
+  InitiateAuthCommand,
+  ResendConfirmationCodeCommand,
+  SignUpCommand,
+  
+} from '@aws-sdk/client-cognito-identity-provider';
+import {docClient, PutCommand} from './db.js';
+import {
+  BatchGetCommand,
+  GetCommand,
+  UpdateCommand,
+} from '@aws-sdk/lib-dynamodb';
+import {profile} from 'console';
+import http from 'http';
+import {Server, Socket} from 'socket.io';
 
 const app = express();
 app.use(cors());
@@ -17,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 
-const PORT = 5500;
+const PORT = 9000;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
@@ -77,12 +97,12 @@ app.post('/register', async (req, res) => {
 app.post('/sendOtp', async(req, res) => {
     const {email, password} = req.body;
     
-    if(! email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         return res.status(400).json({error: 'Invalid email'});
     }
 
     const signUpParams = {
-        ClientId: '90m1tehn4bt5muim50pjen1cv',
+        ClientId: '7ahftivg9h2i2pek766p45fu68',
         Username: email,
         Password: password,
         UserAttributes: [
@@ -95,11 +115,13 @@ app.post('/sendOtp', async(req, res) => {
 
     try{
         const command = new SignUpCommand(signUpParams);
+        console.log("Command:", command);
         await cognitoClient.send(command);
         res.status(200).json({message: 'OTP sent successfully'});
     } catch(error){
-        res.status(400).json({error: 'Failed to send OTP. Please try again'});
-        console.log(error)
+        console.log("Sign up Params:", signUpParams);
+        console.error("Error sending OTP:", error);
+        res.status(400).json({ error: error.message || 'Failed to send OTP. Please try again', details: error.message });
     }
 
 })
@@ -108,7 +130,7 @@ app.post('/resendOtp', async(req, res) => {
     const {email} = req.body;
 
     const resendOtpParams = {
-        ClientId: '90m1tehn4bt5muim50pjen1cv',
+        ClientId: '7ahftivg9h2i2pek766p45fu68',
         Username: email
     }
 
@@ -122,15 +144,22 @@ app.post('/resendOtp', async(req, res) => {
 })
 
 app.post('/confirmSignUp', async(req, res) => {
-    const {email, otp} = req.body;
+    const {email, enteredotp} = req.body;
+
+    // const cognitoUsername = await fetchCognitoUsernameByEmail(email); // Implement this function
+
+    // if (!cognitoUsername) {
+    //     return res.status(400).json({ error: 'User not found or username missing.' });
+    // }
 
     const confirmParams = {
-        ClientId: '90m1tehn4bt5muim50pjen1cv',
+        ClientId: '7ahftivg9h2i2pek766p45fu68',
         Username: email,
-        ConfirmationCode: otp
+        ConfirmationCode: enteredotp
     }
 
     try{
+        console.log("Confirm Params:", confirmParams);
         const command = new ConfirmSignUpCommand(confirmParams);
         await cognitoClient.send(command);
         res.status(200).json({message: 'Email verified successfully'});

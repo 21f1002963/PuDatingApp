@@ -15,7 +15,7 @@ const PasswordScreen = () => {
   const route = useRoute();
   const email = route?.params?.email;
   const [password, setPassword] = React.useState('');
-
+  
   const handleSendOtp = async () =>{
     if(!email) console.log("Email is required");
     try{
@@ -26,6 +26,9 @@ const PasswordScreen = () => {
       console.log("OTP sent successfully", response.data);
       navigation.navigate('OTP', { email: email });
     }catch(error){
+      if (error.response) {
+        console.log("Error response data:", error.response.data); 
+      }
       console.log("Error sending the otp", error);
     }
   }
@@ -69,7 +72,8 @@ const PasswordScreen = () => {
             borderBottomWidth: 1,
             paddingBottom: 10,
             fontFamily: 'GeezaPro-Bold',
-            fontSize: password ? 22 : 22
+            fontSize: password ? 22 : 22,
+            color: 'black'
           }}/> 
           <Text style={{color: 'gray', marginTop: 7, fontSize: 15}}>
             Note: Your details will be safe with us

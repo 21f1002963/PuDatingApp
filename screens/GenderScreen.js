@@ -23,7 +23,7 @@ const GenderScreen = () => {
     if(gender.trim() !== '') {
       saveRegistrationProgress('Gender', gender)
     }
-    navigation.navigate('LookingFor')
+    navigation.navigate('Type')
   }
   return (
     <SafeAreaView style={{ paddingTop: Platform.OS === 'android' ? 50 : 0, flex: 1, backgroundColor: 'white' }}>

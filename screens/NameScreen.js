@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
 import React, { useEffect } from 'react'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import { Image } from 'react-native'
@@ -19,7 +19,7 @@ const NameScreen = () => {
     if(firstName.trim() !== '') {
       saveRegistrationProgress('Name', { firstName })
     }
-    navigation.navigate('Email')
+    navigation.navigate('Type')
   }
   return (
     <SafeAreaView
@@ -75,6 +75,7 @@ const NameScreen = () => {
           <Text style={{marginTop: 8, fontSize: 15, color: "gray", fontWeight: 500 }}>Last name is optional</Text>
           <TouchableOpacity 
           onPress= {handleNext}
+          activeOpacity={0.8}
           style={{ marginTop: 30, marginLeft: 'auto'}}>
             <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845"/>
           </TouchableOpacity>

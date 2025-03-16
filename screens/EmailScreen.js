@@ -1,30 +1,30 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
-import Fontisto from "@react-native-vector-icons/fontisto"
 import { Image } from 'react-native'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
+import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import Fontisto from "@react-native-vector-icons/fontisto"
 import Ionicons from '@react-native-vector-icons/ionicons'
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const EmailScreen = () => {
-  const navigaiton = useNavigation()
+  const navigation = useNavigation()
   const [Email, setEmail] = React.useState('');
 
   useEffect(() => {
     getRegistrationProgress('Email').then(data => {
       if(data){
-        setEmail(data)
+        setEmail(data.Email || '')
       }
     })
   }, [])
 
   const handleNext = () => {
     if(Email.trim() !== ''){
-      saveRegistrationProgress('Email', Email)
+      saveRegistrationProgress('Email', {Email})
     }
-    navigaiton.navigate('Password', {
+    navigation.navigate('Password', {
       email: Email
     })
   }
@@ -57,7 +57,7 @@ const EmailScreen = () => {
         </Text>
         <TextInput
           value={Email} 
-          onChangeText={ text => setFirstName(text)}
+          onChangeText={ text => setEmail(text)}
           autoFocus={true}
           placeholder='Enter your email'
           placeholderTextColor={"#BEBEBE"}

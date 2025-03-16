@@ -1,18 +1,19 @@
-import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable } from 'react-native'
+import { Image } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import React, { useEffect } from 'react'
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
-import { Image } from 'react-native';
 import { Ionicons } from '@react-native-vector-icons/ionicons';
 import { FontAwesome } from '@react-native-vector-icons/fontawesome';
-import { Pressable, TouchableOpacity } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
+import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
 const TypeScreen = () => {
   const [type, setType] = React.useState('');
   const navigation = useNavigation();
   useEffect(() => {
-    getRegistrationProgress().then((progress) => {
-      if(progress.Type) {
+    getRegistrationProgress('Type').then((progress) => {
+      if(progress) {
         setType(progress.Type || '');
       }
     })
@@ -28,7 +29,7 @@ const TypeScreen = () => {
       <View style={{ marginTop: 30, marginHorizontal: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <View style={{ width: 44, height: 44, borderRadius: 22, borderWidth: 2, borderColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
-          <MaterialDesignIcons name="type-male" size={26} color="black" />
+          <MaterialDesignIcons name="gender-male" size={26} color="black" />
 
           </View>
           <Image style={{ width: 100, height: 40 }}
@@ -49,9 +50,9 @@ const TypeScreen = () => {
         <View style={{marginTop: 30, flexDirection:"column", gap:12}}>
           <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
               <Text style={{fontSize:18, fontWeight:"500"}}>Straight</Text>
-              <Pressable onPress={() => setType('Straight')}>
+              {/* <Pressable onPress={() => setType('Straight')}>
               <FontAwesome name="circle" size={26} color={type =="Straight" ? "#581845" : "#F0F0F0"}></FontAwesome>
-              </Pressable>
+              </Pressable> */}
           </View>
 
           <View style={{flexDirection:"row", alignItems:"center", justifyContent:"space-between"}}>
@@ -81,13 +82,12 @@ const TypeScreen = () => {
           </View>
         </View>
 
-
-          <TouchableOpacity
-            onPress={handleNext}
-            style={{ marginTop: 30, marginLeft: 'auto' }}>
-            <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845" />
-          </TouchableOpacity>
-        </View>
+        {/* <TouchableOpacity
+          onPress={handleNext}
+          style={{ marginTop: 30, marginLeft: 'auto' }}>
+          <Ionicons name="chevron-forward-circle-outline" size={45} color="#581845" />
+        </TouchableOpacity> */}
+      </View>
     </SafeAreaView>
   )
 }

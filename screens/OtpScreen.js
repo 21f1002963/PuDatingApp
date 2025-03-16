@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
 import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
+import { BASE_URL } from '../urls/url';
+import { Alert } from 'react-native';
+
 
 const OtpScreen = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
@@ -12,44 +16,44 @@ const OtpScreen = () => {
   const email = route?.params?.email;
 
   const handleConfirmSignUp = async () => {
-    const otp = otp.join('');
-    console.log("OTP entered is", otp);
+    const enteredotp = otp.join('');
+    console.log("OTP entered is", enteredotp);
 
-    if(!email || !otp){
+    if(!email || !enteredotp){
       return;
     } 
     try{
-      const response = await axios.post(`${BASE_URL}/confirmSignUp`, {email, otp});
+      const response = await axios.post(`${BASE_URL}/confirmSignUp`, {email, enteredotp});
       if(response.status === 200){
-        console.log("Confirm sign up response", response.data);
-        Alert.alert("OTP confirmed successfully");
+        console.log("OTP confirmed successfully");
         navigation.navigate('Birth')
       }
     } catch(error){
       console.log("Error confirming the otp", error);
-
     }
   }
 
   useEffect(()=>{
-    if(otp.every(digit=> digit !== '')){
+    if(otp.every(digit => digit !== '')){
+      console.log("ALl digits entered");
       handleConfirmSignUp()
     }
   }, [otp])
 
   const handleChange = (text, index) => {
     const newOtp = [...otp]
+    console.log(newOtp);
     newOtp[index] = text;
     setOtp(newOtp)
 
     if(text && index < 5){
-      inputs.current[index+1].focus();
+      inputs.current[index+1]?.focus();
     }
   }
 
   const handleBackspace = (text, index) => {
     if(!text && index > 0){
-      inputs.current[index-1].focus();
+      inputs.current[index-1]?.focus();
     }
     const newOtp = [...otp]
     newOtp[index] = text;
@@ -58,7 +62,7 @@ const OtpScreen = () => {
 
   const handleResendOtp = async () => {
     setOtp(['', '', '', '', '', ''])
-
+    inputs.current[0]?.focus()
     try{
       const response = await axios.post(`${BASE_URL}/resendOtp`, {email});
       console.log("OTP resent successfully", response.data);
@@ -112,7 +116,7 @@ const OtpScreen = () => {
           onChangeText={text => handleChange(text, index)}
           onKeyPress={({nativeEvent}) => {
             if(nativeEvent.key == "BackSpace"){
-              handleBackspace("", index)
+              handleBackspace(otp[index], index)
             }
           }}
           autoFocus={index===0}>
@@ -121,7 +125,7 @@ const OtpScreen = () => {
       </View>
       
       <View style={{marginTop: 30}}>
-        <Button onPress={handleResendOtp} style={{color: 'blue'}}>Resend OTP</Button>
+        <Button onPress={handleResendOtp} title="Resend OTP"></Button>
       </View>
     </SafeAreaView>
   )

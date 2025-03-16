@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
 import React, { useEffect } from 'react'
 import { TextInput, TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
@@ -6,8 +6,7 @@ import MaterialDesignIcons from '@react-native-vector-icons/material-design-icon
 import { Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { saveRegistrationProgress } from '../utils/registrationUtils'
-import { getRegistraitonProgress } from '../utils/registrationUtils'
-
+import { getRegistrationProgress } from '../utils/registrationUtils'
 
 const DateOfBirthScreen = () => {
   const [day, setDay] = React.useState('')
@@ -38,9 +37,10 @@ const DateOfBirthScreen = () => {
   const navigation = useNavigation()
 
   useEffect(() => {
-    getRegistraitonProgress('dateOfBirth').then((dateOfBirth) => {
-      if (dateOfBirth) {
-        const [day, month, year] = dateOfBirth.split('/')
+    getRegistrationProgress('dateOfBirth').then((DOB) => {
+      if (DOB) {
+        console.log(DOB)
+        const [day, month, year] = DOB.split('/')
         setDay(day)
         setMonth(month)
         setYear(year)
@@ -53,7 +53,7 @@ const DateOfBirthScreen = () => {
       const dateOfBirth = `${day}/${month}/${year}`
       saveRegistrationProgress('dateOfBirth', dateOfBirth)
     }
-    navigation.navigate('Gender')
+    navigation.navigate('Location')
   }
 
   return (
@@ -81,7 +81,9 @@ const DateOfBirthScreen = () => {
             <TextInput
               value={day}
               onChangeText={handleDayChange}
+              keyboardType='numeric'
               autoFocus={true} placeholder='DD'
+              maxLength={2}
               placeholderTextColor={"#BEBEBE"}
               style={{
                 borderBottomWidth: 1,

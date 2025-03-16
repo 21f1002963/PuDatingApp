@@ -112,7 +112,7 @@ const StackNavigator = () => {
                         headerShown: false
                     }}
                 />
-                <Stack.Screen name="Email" component={EmailScreen}
+                {/* <Stack.Screen name="Email" component={EmailScreen}
                     options={{
                         headerShown: false
                     }}
@@ -126,8 +126,8 @@ const StackNavigator = () => {
                     options={{
                         headerShown: false
                     }}
-                />
-                <Stack.Screen name="Birth" component={DateOfBirthScreen}
+                /> */}
+                {/* <Stack.Screen name="Birth" component={DateOfBirthScreen}
                     options={{
                         headerShown: false
                     }}
@@ -141,7 +141,7 @@ const StackNavigator = () => {
                     options={{
                         headerShown: false
                     }}
-                />
+                /> */}
                 <Stack.Screen name="Type" component={TypeScreen}
                     options={{
                         headerShown: false
