@@ -21,7 +21,7 @@ const WorkPlace = () => {
   }, [])
   const handleNext = () => {
     if(WorkPlace.trim() !== ''){
-      saveRegistrationProgress('WorkPlace', WorkPlace)
+      saveRegistrationProgress('WorkPlace', {WorkPlace})
     }
     navigation.navigate('Jobtitle')
   }

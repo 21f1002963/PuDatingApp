@@ -14,13 +14,14 @@ const TypeScreen = () => {
   useEffect(() => {
     getRegistrationProgress('Type').then((progress) => {
       if(progress) {
+        console.log('Progress', progress.type);
         setType(progress.type || '');
       }
     })
   }, [])
   const handleNext = () => {
     if(type.trim() !== '') {
-      saveRegistrationProgress('Type', type)
+      saveRegistrationProgress('Type', {type})
     }
     navigation.navigate('Dating');
   }

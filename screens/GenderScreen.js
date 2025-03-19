@@ -8,20 +8,19 @@ import { useNavigation } from '@react-navigation/native'
 import FontAwesome from '@react-native-vector-icons/fontawesome'
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
-
 const GenderScreen = () => {
   const [gender, setGender] = React.useState('')
   const navigation = useNavigation()
   useEffect(() => {
     getRegistrationProgress('Gender').then(progressData => {
       if(progressData) {
-        setGender(progressData || '')
+        setGender(progressData.gender || '')
       }
   }, [])
   })
   const handleNext = () => {
     if(gender.trim() !== '') {
-      saveRegistrationProgress('Gender', gender)
+      saveRegistrationProgress('Gender', {gender})
     }
     navigation.navigate('Type')
   }

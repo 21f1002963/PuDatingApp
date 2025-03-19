@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable, ActivityIndicator } from 'react-native'
 import React, {useState, useEffect, useContext} from 'react';
 import LottieView from 'lottie-react-native'
-import { useNavigation } from '@react-navigation/native'
 import { AuthContext } from '../AuthContext'
 import axios from 'axios'
 import { BASE_URL } from '../urls/url'
@@ -12,7 +11,39 @@ const PreFinalScreen = () => {
   const [userData, setUserData] = React.useState()
   const [loading, setLoading] = React.useState(false)
   const { token, setToken } = React.useContext(AuthContext)
-  const navigation = useNavigation()
+
+  const getAllUserData = async () => {
+    try {
+      const screens = [
+        'Name',
+        'Email',
+        'Password',
+        'Birth',
+        'Location',
+        'Gender',
+        'Type',
+        'Dating',
+        'LookingFor',
+        'Hometown',
+        'Workplace',
+        'JobTitle',
+        'Photos',
+        'Prompts',
+      ]; 
+      let userData = {};
+      for(const screenName of screens) {
+        const screenData = await getRegistrationProgress(screenName)
+        console.log('Screen data', screenName, screenData);
+        if(screenData){
+          userData = {...userData, ...screenData}
+        }
+      }
+      setUserData(userData)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getAllUserData()
   }, [])
@@ -52,11 +83,15 @@ const PreFinalScreen = () => {
   const registerUser = async () => {
     try {
       setLoading(true)
-      const response = await axios.post(`${BASE_URL}/register`, userData).then((response) => {
-        const token = response.data.token
-        AsyncStorage.setItem('token', token);
-        setToken(token)
-      })
+      const response = await axios
+        .post(`${BASE_URL}/register`, userData)
+        .then(response => {
+          console.log('Response', response);
+          const newToken = response.data.token;
+          AsyncStorage.setItem('token', newToken);
+          setToken(newToken);
+          // navigation.navigate('MainStack');
+        });
       clearAllScreenData()
     }
     catch(error) {
@@ -64,39 +99,6 @@ const PreFinalScreen = () => {
   }finally{
     setLoading(false);
   }
-  }
-
-  const getAllUserData = async () => {
-    try {
-      const screens = [
-        'Name',
-        'Email',
-        'Password',
-        'Birth',
-        'Location',
-        'Gender',
-        'Type',
-        'Dating',
-        'LookingFor',
-        'Hometown',
-        'Workplace',
-        'JobTitle',
-        'Photos',
-        'Prompts',
-      ]; 
-      let userData = {};
-      for(const screenName of screens) {
-        const screenData = await getRegistrationProgress(screenName)
-        if(screenData){
-          userData = {...userData, ...screenData}
-        }
-      }
-
-      setUserData(userData)
-      console.log(user)
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   return (
@@ -119,7 +121,7 @@ const PreFinalScreen = () => {
       <View>
         <LottieView
         style={{
-          height: 250,
+          height: 150,
           width: 250,
           alignSelf: 'center',
           marginTop: 40,
@@ -140,7 +142,6 @@ const PreFinalScreen = () => {
           fontSize: 18,
           fontWeight: '600',
           fontFamily: 'GeezaPro',
-
         }}>Finish Registering</Text>)}
       </Pressable>
     </SafeAreaView>

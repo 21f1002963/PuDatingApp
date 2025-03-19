@@ -25,7 +25,7 @@ const BasicInfo = () => {
       <View>
         <LottieView
         style={{
-          height: 250,
+          height: 150,
           width: 250,
           alignSelf: 'center',
           marginTop: 40,

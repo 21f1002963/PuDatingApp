@@ -14,13 +14,15 @@ const JobTitleScreen = () => {
   const [Jobtitle, setJobtitle] = useState('')
   const navigation = useNavigation() 
   useEffect(() => {
-      getRegistrationProgress('Hometown').then((Jobtitle) => {
-        setWorkPlace(Jobtitle)
+      getRegistrationProgress('Jobtitle').then((progress) => {
+        if(progress){
+          setJobtitle(progress.Jobtitle || '')
+        }
       })
     }, []) 
   const handleNext = () => {
     if(Jobtitle.trim() !== ''){
-      saveRegistrationProgress('Jobtitle', Jobtitle)
+      saveRegistrationProgress('Jobtitle', {Jobtitle})
     }
     navigation.navigate('Photos')
   }

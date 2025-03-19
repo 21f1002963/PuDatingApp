@@ -44,27 +44,27 @@ app.listen(PORT, () => {
 });
 
 const dynamoDbClient = new DynamoDBClient({ region: 'eu-north-1' });
-
 const cognitoClient = new CognitoIdentityProviderClient({ region: 'eu-north-1' });
 
 app.post('/register', async (req, res) => {
     try {
         const userData = req.body;
-        const hashedPassword = await bcrypt.hash(userData.password, 10);
+        const hashedPassword = await bcrypt.hash(userData?.password, 10);
         const userId = crypto.randomUUID();
+
         const newUser = {
             userId: userId,
-            email: userData.email,
-            password: hashedPassword,
+            email: userData.Email,
+            password: hashedPassword || '',
             firstName: userData.firstName,
-            lastName: userData.lastName,
-            gender: userData.gender,
-            dateOfBirth: userData.dateOfBirth,
+            lastName: userData.lastName || '',
+            gender: userData.gender || '',
+            dateOfBirth: userData.dateOfBirth || '',
             type: userData.type,
-            location: userData.location,
+            location: userData.location || '',
             hometown: userData.hometown,
-            workPlace: userData.workPlace,
-            jobTitle: userData.jobTitle,
+            workPlace: userData.workPlace || '',
+            jobTitle: userData.jobTitle || '',
             datingPreference: userData.datingPreference || [],
             lookingFor: userData.lookingFor || [],
             imageURLs: userData.imageUrls || [],
@@ -85,8 +85,9 @@ app.post('/register', async (req, res) => {
         await docClient.send(new PutCommand(params));
 
         const secretKey =
-            '582e6b12ec6da3125121e9be07d00f63495ace485croc9079c30abeebd329986c5c35548b068ddb4b187391a5490c880137c1528c76ce2feacc5ad781a742e2de0'; // Use a better key management
+            '582e6b12ec6da3125121e9be07d00f63495ace020ec9079c30abeebd329986c5c35548b068ddb4b187391a5490c880137c1528c76ce2feacc5ad781a742e2de0'; // Use a better key management
         const token = jwt.sign({ userId: newUser.userId }, secretKey);
+        res.status(200).json({token});
     }
     catch (error) {
         console.log("Error creating the user", error);
