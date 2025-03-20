@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable, ActivityIndicator } from 'react-native'
-import React, {useState, useEffect, useContext} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import LottieView from 'lottie-react-native'
 import { AuthContext } from '../AuthContext'
 import axios from 'axios'
@@ -8,9 +8,9 @@ import { getRegistrationProgress } from '../utils/registrationUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PreFinalScreen = () => {
-  const [userData, setUserData] = React.useState()
-  const [loading, setLoading] = React.useState(false)
-  const { token, setToken } = React.useContext(AuthContext)
+  const [userData, setUserData] = useState()
+  const [loading, setLoading] = useState(false)
+  const { token, setToken } = useContext(AuthContext)
 
   const getAllUserData = async () => {
     try {

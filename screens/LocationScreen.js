@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import , { useEffect } from 'react'
 import { GOOGLE_MAPS_API_KEY } from '../googleAPI'
 import { TouchableOpacity } from 'react-native'
 import { Image } from 'react-native'
@@ -13,9 +13,9 @@ import { PermissionsAndroid, Alert } from 'react-native';
 
 const LocationScreen = () => {
   const navigation = useNavigation();
-  const [region, setRegion] = React.useState(null)
-  const [location, setLocation] = React.useState('Loading...')
-  const [markerCoordinate, setMarkerCoordinate] = React.useState(null);
+  const [region, setRegion] = .useState(null)
+  const [location, setLocation] = .useState('Loading...')
+  const [markerCoordinate, setMarkerCoordinate] = .useState(null);
 
   useEffect(() => {
     const requestLocationPermission = async () => {

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import React from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons"
 import { Image } from 'react-native';
@@ -9,12 +8,14 @@ import Ionicons from "@react-native-vector-icons/ionicons"
 import { saveRegistrationProgress } from '../utils/registrationUtils';
 import axios from 'axios';
 import { BASE_URL } from '../urls/url';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const PasswordScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const email = route?.params?.email;
-  const [password, setPassword] = React.useState('');
+  const [password, setPassword] = useState('');
   
   const handleSendOtp = async () =>{
     if(!email) console.log("Email is required");

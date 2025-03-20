@@ -7,9 +7,10 @@ import {
   Pressable,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import {useState} from 'react';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import {useNavigation, useRoute} from '@react-navigation/native';
+
 
 const WritePrompt = () => {
   const route = useRoute()

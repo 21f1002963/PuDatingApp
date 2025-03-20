@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { useRef } from 'react';
 import { useRoute } from '@react-navigation/native';

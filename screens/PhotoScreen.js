@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialIcons from '@react-native-vector-icons/material-icons'

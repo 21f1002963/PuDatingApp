@@ -1,11 +1,9 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React from 'react'
 import { ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useState } from 'react'
 import { Pressable } from 'react-native'
 import { useRoute } from '@react-navigation/native'
-import WritePrompt from '../screens/WritePrompt';
 
 const ShowPromptsScreen = ({ route: newroute }) => {
   const navigation = useNavigation()

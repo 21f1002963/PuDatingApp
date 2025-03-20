@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable } from 'react-native'
 import { Image } from 'react-native';
 import { TouchableOpacity }  from 'react-native';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import Ionicons  from '@react-native-vector-icons/ionicons';
 import FontAwesome from '@react-native-vector-icons/fontawesome';
@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils';
 
 const TypeScreen = () => {
-  const [type, setType] = React.useState('');
+  const [type, setType] = useState('');
   const navigation = useNavigation();
   useEffect(() => {
     getRegistrationProgress('Type').then((progress) => {

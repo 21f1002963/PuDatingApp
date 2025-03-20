@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect, useState, useRef} from 'react'
 import { TextInput, TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
@@ -9,12 +9,12 @@ import { saveRegistrationProgress } from '../utils/registrationUtils'
 import { getRegistrationProgress } from '../utils/registrationUtils'
 
 const DateOfBirthScreen = () => {
-  const [day, setDay] = React.useState('')
-  const [month, setMonth] = React.useState('')
-  const [year, setYear] = React.useState('')
+  const [day, setDay] = useState('')
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
 
-  const monthRef = React.useRef(null);
-  const yearRef = React.useRef(null);
+  const monthRef = useRef(null);
+  const yearRef = useRef(null);
 
   const handleDayChange = (text) => {
     setDay(text)

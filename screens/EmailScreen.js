@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
 import { Image } from 'react-native'
 import { TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import Fontisto from "@react-native-vector-icons/fontisto"
 import Ionicons from '@react-native-vector-icons/ionicons'
@@ -10,7 +10,7 @@ import { getRegistrationProgress, saveRegistrationProgress } from '../utils/regi
 
 const EmailScreen = () => {
   const navigation = useNavigation()
-  const [Email, setEmail] = React.useState('');
+  const [Email, setEmail] = useState('');
 
   useEffect(() => {
     getRegistrationProgress('Email').then(data => {

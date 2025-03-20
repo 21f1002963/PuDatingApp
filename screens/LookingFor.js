@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
@@ -10,7 +10,7 @@ import { Pressable } from 'react-native'
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const LookingFor = () => {
-  const [LookingFor, setLookingFor] = React.useState('')
+  const [LookingFor, setLookingFor] = useState('')
   const navigation = useNavigation()
   useEffect(() => {
     getRegistrationProgress('LookingFor').then((data) => {

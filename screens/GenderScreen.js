@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform, Pressable } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Ionicons from '@react-native-vector-icons/ionicons'
 import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons'
@@ -9,7 +9,7 @@ import FontAwesome from '@react-native-vector-icons/fontawesome'
 import { getRegistrationProgress, saveRegistrationProgress } from '../utils/registrationUtils'
 
 const GenderScreen = () => {
-  const [gender, setGender] = React.useState('')
+  const [gender, setGender] = useState('')
   const navigation = useNavigation()
   useEffect(() => {
     getRegistrationProgress('Gender').then(progressData => {

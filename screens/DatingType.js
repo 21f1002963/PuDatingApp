@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native'
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Image } from 'react-native'
 import { TouchableOpacity } from 'react-native'
 import Ionicons  from '@react-native-vector-icons/ionicons'
@@ -11,7 +11,7 @@ import { getRegistrationProgress, saveRegistrationProgress } from '../utils/regi
 
 const DatingType = () => {
   const navigation = useNavigation()
-  const [datingPreference, setDatingPreference] = React.useState([])
+  const [datingPreference, setDatingPreference] = useState([])
   const chooseOption = (option) => {
     if (datingPreference.includes(option)) {
       setDatingPreference(datingPreference.filter(item => item !== option))
