@@ -169,3 +169,109 @@ app.post('/confirmSignUp', async(req, res) => {
     }
 })
 
+app.get('/matches', async (req, res) => {
+    const { userId } = req.query;
+
+    try{
+        if(!userId) {
+            return res.status(400).json({ error: 'User ID is required' });
+        }
+
+        const params = {
+            TableName: 'users',
+            Key: {
+                userId
+            }
+        }
+
+        const { userResult } = await dynamoDbClient.send(new GetCommand(params));
+
+        if(!userResult.Item) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const user = {
+            userId: userResult.Item.userId,
+            gender: userResult.Item.gender,
+            datingPreference: userResult.Item.datingPreference?.map(pref => pref) || [],
+            matches: userResult.Item.matches?.map(match => match) || [],
+            likedProfiles: userResult.Item.likedProfiles?.map(liked => likedUserId ) || [],
+        }
+
+        const genderFilters = user?.datingPreference?.map(g => {{S:g}});
+
+        const excludeIds = [
+            ...user?.matches,
+            ...user.likedProfiles,
+            user.userId
+        ].map(id => ({S: id}));
+
+        const scanParams={
+            TableName: 'users',
+            FilterExpression: 'userId <> :currentUserId AND (contains(:genderPref, gender)) AND NOT contains(:excludedIds, userId)',
+            ExpressionAttributeValues: {
+                ':currentUserId': {S: user.userId},
+                ':genderPref': {L: genderFilter.length > 0 ? genderFilter : [{S: 'None'}]},
+                ':excludedIds': {L: excludeIds}
+            },
+        }
+
+        const scanResult = await dynamoDbClient.send(new ScanCommand(scanParams));
+
+        const matches = scanResult.Items.map(item => ({
+            userId: item.userId.S,
+            email: item.email.S,
+            firstName: item.firstName.S,
+            gender: item.gender.S,
+            location: item.location.S,
+            lookingFor: item.lookingFor.S,
+            dateOfBirth: item.dateOfBirth.S,
+            hometown: item.hometown.S,
+            type: item.type.S,
+            jobTitle: item.jobTitle.S,
+            workPlace: item.workPlace.S,
+            imageUrls: item.imageUrls.L.map(image => image.S) || [],
+            prompts: item.prompts.L.map(prompt => ({
+                question: prompt.M.question.S,
+                answer: prompt.M.answer.S
+            })) || [],
+        }));
+
+        res.status(200).json({matches});
+
+    }catch(error){
+        console.log("Error fetching matches", error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+})
+
+app.get('/user-info', async (req, res) => {
+    const { userId } = req.query;
+
+    if(!userId) {
+        return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    try{
+        const params = {
+            TableName: 'users',
+            Key: {
+                userId
+            }
+        }
+
+    const command = new GetCommand(params);
+    const result = await dynamoDbClient.send(command);
+
+    if(!result.Item) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({message: 'User found', user: result.Item});
+
+    }catch(error){
+        console.log("Error fetching user info", error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+
+})
