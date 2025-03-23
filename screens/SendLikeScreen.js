@@ -4,7 +4,37 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SendLikeScreen = () => {
     const [ comment, setComment ] = useState('')
-    const route = useRoute()
+    const route = useRoute();
+    const likedProfile = async () => {
+        try{
+            const token = await AsyncStorage.getItem('token')
+            const payload = {
+                userId : route?.params?.userId,
+                likedUserId : route?.params?.likedUserId,
+                image: route?.params?.image,
+                prompt: route?.params?.prompt,
+                type: route?.params?.type,
+            }
+
+            if(comment && comment.trim() !== ''){
+                payload.comment = comment.trim()
+            }
+
+            const response = await axios.post(`${BASE_URL}/like-profile`, payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            console.log(response)
+
+            if(resonse == 200){
+                navigation.goBack()
+            }
+        } catch(e) {
+            console.log(e)
+        }   
+    }   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'rgba(240, 240, 240, 1)'}}>
         <View style={{marginTop: 'auto', marginBottom: 'auto', marginHorizontal: 25}}>
@@ -85,7 +115,9 @@ const SendLikeScreen = () => {
                     <Ionicons name="rose" size={22} color="#a04aba" />
                 </Pressable>
 
-                <Pressable style={{
+                <Pressable 
+                onPress={likedProfile}
+                style={{
                     backgroundColor: '#d4badb',
                     borderRadius: 30,
                     padding: 20,

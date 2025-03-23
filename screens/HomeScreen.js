@@ -46,6 +46,15 @@ const HomeScreen = () => {
       setCurrentProfile(users[0])
     }
   }, [users])
+   
+  // THIS BRINGS UP THE NEXT PROFILE
+  useFocusEffect(
+    useCallback(() => {
+      if(userId){
+        fetchMatches()
+      }
+    }, [userId])
+  )
 
   const fetchMatches = async() => {
     try{
