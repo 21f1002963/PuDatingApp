@@ -474,3 +474,51 @@ app.get('/recieved-likes/:userId', authenticateToken, async (req, res) => {
         res.status(500).json({error: 'Internal server error'});
     }
 })
+
+app.post('/login', async(req,res) => {
+    const {email, password} = req.body;
+
+    const authParams={
+        AuthFlow: 'USER_PASSWORD_AUTH',
+        ClientId: '6lb67n2bu41pnt9048qch5fsdm',
+        AuthParameter:{
+            USERNAME: email,
+            PASSWORD: password
+        }
+    }
+
+    try{
+        const authCommand = new InitiateAuthCommand(authParams);
+        const authResult = await cognitoClient.send(authCommand);
+
+        const {IdToken, AccessToken, RefreshToken} = authResult.AuthenticationResult;
+
+        const userParams = {
+            TableName: 'users',
+            IndexName: 'email-index',
+            KeyConditionExpression: 'email = :emailValue',
+            ExpressionAttributeValues: {
+                ':emailValue': {S: email}
+            }
+        }
+
+        const userResult = await dynamoDbClient.send(new QueryCommand(userParams)); 
+
+        if(!userResult.Items || userResult.Items.length === 0) {
+            return res.status(404).json({error: 'User not found'});
+        }
+
+        const user = userResult.Items[0];
+        const userId = user.userId.S;
+
+        const secretKey =
+            '582e6b12ec6da3125121e9be07d00f63495ace020ec9079c30abeebd329986c5c35548b068ddb4b187391a5490c880137c1528c76ce2feacc5ad781a742e2de0';
+
+        const token = jwt.sign({userId: userId, email: email}, secretKey);
+
+        res.status(200).json({token, IdToken, AccessToken, RefreshToken});
+    }catch(error){
+        console.log("Error logging in", error);
+        res.status(500).json({error: 'Internal server error'});
+    }
+})
